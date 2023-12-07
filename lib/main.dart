@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:here/features/historical%20information/page.dart';
-import 'package:here/features/home%20page/main_page.dart';
+import 'features/home%20page/main_page.dart';
 
 void main() {
   runApp(const MyApp());
