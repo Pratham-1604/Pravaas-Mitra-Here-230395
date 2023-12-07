@@ -28,17 +28,22 @@ class ImageWidget extends StatelessWidget {
           Positioned(
             left: 10,
             top: 10,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.chevron_left_outlined,
-                  size: 20,
-                  color: Colors.black54,
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.chevron_left_outlined,
+                    size: 20,
+                    color: Colors.black54,
+                  ),
                 ),
               ),
             ),
