@@ -13,11 +13,11 @@ class PopularDestinationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Row(
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -33,9 +33,9 @@ class PopularDestinationWidget extends StatelessWidget {
               ),
             ],
           ),
-          PopularDestinationItems(size: size),
-        ],
-      ),
+        ),
+        PopularDestinationItems(size: size),
+      ],
     );
   }
 }
