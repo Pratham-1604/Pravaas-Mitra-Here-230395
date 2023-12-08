@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:here/features/city_information/city_information_page.dart';
+import 'package:here/features/home_page/controller/home_page_repositoy_controller.dart';
+import 'package:here/models/city_model.dart';
 import 'widgets/app_bar_widget.dart';
 import 'widgets/bottom_nav_bar.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   int _currentIndex = 0;
 
   List<Widget> pages = const [
@@ -19,7 +22,21 @@ class _HomePageState extends State<HomePage> {
     CityInformationMainPage(),
   ];
 
-  
+  CityModel? city;
+
+  @override
+  void initState() {
+    super.initState();
+    // Use asynchronous operation in initState, like Future.delayed
+    // to avoid triggering LateInitializationError
+    Future.delayed(Duration.zero, () async {
+      await ref.read(HomePageControllerProvider).setCurrentCity();
+      setState(() {
+        city = ref.read(HomePageControllerProvider).getCityDetails();
+      });
+    });
+  }
+
   Widget _buildPage(int index) {
     return pages[index];
   }
@@ -27,6 +44,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
+    // Check if city is null and show loading screen accordingly
+    if (city == null) {
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.grey[100],
@@ -37,7 +64,10 @@ class _HomePageState extends State<HomePage> {
               width: size.width,
               height: size.width * 0.04,
             ),
-            const AppBarWidget(),
+            AppBarWidget(
+              cityName: city!.name,
+              countryName: city!.countryName,
+            ),
             _buildPage(_currentIndex),
             BottomNavBar(
               size: size,
@@ -54,5 +84,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-
