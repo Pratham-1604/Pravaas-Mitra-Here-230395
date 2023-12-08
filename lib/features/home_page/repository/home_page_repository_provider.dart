@@ -23,7 +23,7 @@ class HomePageRepository {
     Position position = await _determinePosition();
     // process and get output
     try {
-      const String url = 'https://c6c9-150-242-204-196.ngrok-free.app/city';
+      const String url = 'https://6a62-150-242-204-196.ngrok-free.app/city';
       final Map<String, dynamic> requestBody = {
         "latitude": position.latitude,
         "longitude": position.longitude,
@@ -40,35 +40,30 @@ class HomePageRepository {
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonResponse = jsonDecode(response.body);
         debugPrint("Successful CITYNAME API ${response.body}");
-// Parse the JSON response into CityModel
+
         CityModel c = CityModel(
           name: jsonResponse['city'],
           countryName: jsonResponse['country'],
           info: jsonResponse['info'],
-          places: List<PlacesModel>.from(
-            (jsonResponse['places'] as List).map(
-              (place) => PlacesModel(
-                name: place['name'] as String,
-                info: place['info'] as String,
-                address: place['address'] as String,
-                website: place['website'] as String?,
-                images: List<String>.from(place['images'] as List),
-                reviews: List<String>.from(place['reviews'] as List),
-                ratings: place['ratings'] as double,
-                latitude: place['latitude'] as double,
-                longitude: place['longitude'] as double,
-                emails: (place['emails'] as List?)
-                        ?.map((item) => item as String)
-                        .toList() ?? [],
-                phoneNumber: (place['phoneNumber'] as List?)
-                        ?.map((item) => item as String)
-                        .toList() ?? [],
-              ),
-            ),
-          ),
+          places: (jsonResponse['places'] as List).map((place) {
+            return PlacesModel(
+              name: place['name'] as String,
+              info: place['info'] as String,
+              address: place['address'] as String,
+              website: place['website'] as String?,
+              images: place['images'] as String,
+              ratings: place['ratings'] as double,
+              latitude: place['latitude'] as double,
+              longitude: place['longitude'] as double,
+              emails: place['emails'] as String?,
+              phoneNumber: place['phoneNumber'] as String?,
+            );
+          }).toList(),
         );
+
         cityData = c;
       } else {
+        debugPrint('here');
         CityModel c = CityModel(
           name: 'DBC',
           countryName: 'IND',

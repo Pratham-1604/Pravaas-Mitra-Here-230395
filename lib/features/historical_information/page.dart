@@ -28,7 +28,7 @@ class HistoricalInformationPage extends StatelessWidget {
                 width: size.width,
                 height: size.height * 0.01,
               ),
-              ImageWidget(size: size, img: plc.images[0]),
+              ImageWidget(size: size, img: plc.images),
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(

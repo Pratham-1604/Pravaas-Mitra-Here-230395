@@ -36,7 +36,7 @@ class PopularDestinationItemWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Image.network(
-                plc.images[0],
+                plc.images,
                 fit: BoxFit.cover,
               ),
             ),

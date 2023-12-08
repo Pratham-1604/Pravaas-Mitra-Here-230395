@@ -14,21 +14,23 @@ class CityModel {
   });
 
   factory CityModel.fromJson(Map<String, dynamic> json) {
-    List<PlacesModel> convertedPlaces = (json['places'] as List).map((place) {
-      return PlacesModel(
-        name: place['name'] as String,
-        info: place['info'] as String,
-        address: place['address'] as String,
-        website: place['website'] as String?,
-        images: List<String>.from(place['images'] as List),
-        reviews: List<String>.from(place['reviews'] as List),
-        ratings: place['ratings'] as double,
-        latitude: place['latitude'] as double,
-        longitude: place['longitude'] as double,
-        emails: (place['emails'] as List?)?.map((item) => item as String).toList() ?? [],
-        phoneNumber: (place['phoneNumber'] as List?)?.map((item) => item as String).toList() ?? [],
-      );
-    }).toList();
+    List<PlacesModel> convertedPlaces = [];
+    if (json['places'] != null) {
+      convertedPlaces = (json['places'] as List).map((place) {
+        return PlacesModel(
+          name: place['name'] as String,
+          info: place['info'] as String,
+          address: place['address'] as String,
+          website: place['website'] as String?,
+          images: place['images'] as String,
+          ratings: place['ratings'] as double,
+          latitude: place['latitude'] as double,
+          longitude: place['longitude'] as double,
+          emails: place['emails'] as String?,
+          phoneNumber: place['phoneNumber'] as String?,
+        );
+      }).toList();
+    }
 
     return CityModel(
       name: json['city'] as String,

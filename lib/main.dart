@@ -9,7 +9,6 @@ import 'features/home_page/main_page.dart';
 import 'package:here_sdk/core.dart';
 import 'package:here_sdk/core.engine.dart';
 import 'package:here_sdk/core.errors.dart';
-import 'package:here_sdk/mapview.dart';
 
 
 void _initializeHERESDK() async {
@@ -17,8 +16,8 @@ void _initializeHERESDK() async {
   SdkContext.init(IsolateOrigin.main);
 
   // Set your credentials for the HERE SDK.
-  String accessKeyId = "YOUR_ACCESS_KEY_ID";
-  String accessKeySecret = "YOUR_ACCESS_KEY_SECRET";
+  String accessKeyId = "mbmLosDSem7_ljHgub7Qrg";
+  String accessKeySecret = "I5_O9L9V0ThyE-n9evGsBELz7TGKmm2a97EiJp-joZNUS_6RjRKtPffZtR8gMtE_VcZh4iJSPO0s5GmVrP6r-w";
   SDKOptions sdkOptions = SDKOptions.withAccessKeySecret(accessKeyId, accessKeySecret);
 
   try {
