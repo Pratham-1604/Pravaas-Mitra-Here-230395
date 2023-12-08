@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
-import 'package:here/features/historical%20information/widgets/read_more.dart';
+import 'package:here/features/historical_information/widgets/read_more.dart';
 
 import 'widgets/image_widget.dart';
 

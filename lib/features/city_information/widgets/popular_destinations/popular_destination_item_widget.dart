@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:here/features/historical%20information/page.dart';
+import 'package:here/features/historical_information/page.dart';
 
 class PopularDestinationItemWidget extends StatelessWidget {
   const PopularDestinationItemWidget({
