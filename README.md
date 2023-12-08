@@ -13,30 +13,29 @@ Welcome to Pravaas Mitra! Your ultimate travel assistant for discovering new pla
 
 ## Screenshots
 ### 1. Home Page
-![3](https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/9a1bbfe8-3d20-4ba5-9497-068eb9d8f1ca)
+<img src="https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/9a1bbfe8-3d20-4ba5-9497-068eb9d8f1ca" width="40%" height="40%">
 
 ### 2. Recommended Tours
-![9](https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/b334c9c2-528d-432a-940e-2d7baeae9546)
+<img src="https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/b334c9c2-528d-432a-940e-2d7baeae9546" width="40%" height="40%">
 
 ### 3. See All destinations
-![6](https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/f4b9ac0a-a3d7-4bc1-81fa-2d49d59f0dfd)
-![8](https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/7abbd10d-3a77-4b47-82e0-b2669062682e)
+<img src="https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/f4b9ac0a-a3d7-4bc1-81fa-2d49d59f0dfd" width="40%" height="40%">
+<img src="https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/7abbd10d-3a77-4b47-82e0-b2669062682e" width="40%" height="40%">
 
 ### 4. Profile Page
-![1](https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/194ebcf4-9ff2-47fc-9d78-381184449035)
+<img src="https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/194ebcf4-9ff2-47fc-9d78-381184449035" width="40%" height="40%">
 
 ### 5. Detailed Historical Location 
-![2](https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/77cfd77d-5973-47bc-b6a2-1dd2ee100494)
+<img src="https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/77cfd77d-5973-47bc-b6a2-1dd2ee100494" width="40%" height="40%">
 
 ### 6. Map of Historical Location
-![5](https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/ad4b0a94-1fb8-45f0-ad72-5883dd1d4f50)
+<img src="https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/ad4b0a94-1fb8-45f0-ad72-5883dd1d4f50" width="40%" height="40%">
 
 ### 7. Filters for See All  
-![4](https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/5340bbf5-63c6-4d68-915f-6e38b119b4cf)
+<img src="https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/5340bbf5-63c6-4d68-915f-6e38b119b4cf" width="40%" height="40%">
 
-### 8. Explore any city in the world
-![7](https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/ffef8c76-a081-468c-9219-1acb18e6634a)
-
+### 8. Explore any city in the world using the button
+<img src="https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/ffef8c76-a081-468c-9219-1acb18e6634a" width="40%" height="40%">
 
 ## APIs Used
 1) [HERE Maps SDK (Flutter)](https://www.here.com/docs/bundle/sdk-for-flutter-explore-developer-guide/page/README.html)
@@ -54,5 +53,3 @@ Welcome to Pravaas Mitra! Your ultimate travel assistant for discovering new pla
 6) Realtime filters
 
 Start exploring and planning your next adventure!
-
-
