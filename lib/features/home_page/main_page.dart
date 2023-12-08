@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:here/features/city_information/city_information_page.dart';
 import 'package:here/features/home_page/controller/home_page_repositoy_controller.dart';
+import '../profile_page/profile_page.dart';
 import 'package:here/models/city_model.dart';
+
 import 'widgets/app_bar_widget.dart';
 import 'widgets/bottom_nav_bar.dart';
 
@@ -19,7 +22,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   List<Widget> pages = const [
     CityInformationMainPage(),
     CityInformationMainPage(),
-    CityInformationMainPage(),
+    ProfilePage(),
   ];
 
   CityModel? city;
@@ -47,7 +50,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     // Check if city is null and show loading screen accordingly
     if (city == null) {
-      return Scaffold(
+      return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
         ),
