@@ -1,15 +1,20 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:here/features/city_information/widgets/popular_destinations/popular_destination_item_widget.dart';
 
+import '../../../../models/city_model.dart';
+import '../../../home_page/controller/home_page_repositoy_controller.dart';
 import './widgets//search_bar.dart';
 import 'widgets/app_bar.dart';
 
-class SeeAllDestinations extends StatelessWidget {
+class SeeAllDestinations extends ConsumerWidget {
   const SeeAllDestinations({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    CityModel city = ref.read(HomePageControllerProvider).getCityDetails();
+
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -34,9 +39,10 @@ class SeeAllDestinations extends StatelessWidget {
                     itemBuilder: (context, index) => Center(
                       child: PopularDestinationItemWidget(
                         size: size,
+                        plc: city.places[index],
                       ),
                     ),
-                    itemCount: 4,
+                    itemCount: city.places.length,
                   ),
                 ),
               ),

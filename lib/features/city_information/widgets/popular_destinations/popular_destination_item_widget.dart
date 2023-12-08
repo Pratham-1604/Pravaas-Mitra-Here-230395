@@ -1,13 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors
 import 'package:flutter/material.dart';
+
 import 'package:here/features/historical_information/page.dart';
+import 'package:here/models/places_model.dart';
 
 class PopularDestinationItemWidget extends StatelessWidget {
   const PopularDestinationItemWidget({
-    super.key,
+    Key? key,
     required this.size,
-  });
+    required this.plc,
+  }) : super(key: key);
 
   final Size size;
+  final PlacesModel plc;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,7 @@ class PopularDestinationItemWidget extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const HistoricalInformationPage(),
+            builder: (context) => HistoricalInformationPage(plc: plc),
           ),
         );
       },
@@ -27,8 +32,12 @@ class PopularDestinationItemWidget extends StatelessWidget {
               height: size.height * 0.35,
               width: size.width * 0.55,
               decoration: BoxDecoration(
-                color: Colors.grey,
+                // color: Colors.grey,
                 borderRadius: BorderRadius.circular(20),
+              ),
+              child: Image.network(
+                plc.images[0],
+                fit: BoxFit.cover,
               ),
             ),
             Positioned(
@@ -39,10 +48,10 @@ class PopularDestinationItemWidget extends StatelessWidget {
                   color: Colors.grey[600],
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.all(4.0),
                   child: Text(
-                    'Name is 123',
+                    plc.name,
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -62,7 +71,7 @@ class PopularDestinationItemWidget extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Row(
-                    children: const [
+                    children: [
                       Icon(
                         Icons.star,
                         color: Colors.yellow,
@@ -70,7 +79,7 @@ class PopularDestinationItemWidget extends StatelessWidget {
                       ),
                       SizedBox(width: 4),
                       Text(
-                        '4.1',
+                        plc.ratings.toString(),
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

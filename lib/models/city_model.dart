@@ -1,10 +1,10 @@
-import 'places_thumbnail_modell.dart';
+import 'places_model.dart';
 
 class CityModel {
   final String name;
   final String countryName;
   final String info;
-  final List<PlaceThumbnailModel> places;
+  final List<PlacesModel> places;
 
   CityModel({
     required this.name,
@@ -14,13 +14,19 @@ class CityModel {
   });
 
   factory CityModel.fromJson(Map<String, dynamic> json) {
-    // Convert each inner list into a PlaceThumbnailModel
-    List<PlaceThumbnailModel> convertedPlaces = (json['places'] as List).map((place) {
-      return PlaceThumbnailModel(
-        name: place[0] as String,
-        image: place[1] as String,
-        rating: place[2] as double,
-        isFavourite: place[3] as bool,
+    List<PlacesModel> convertedPlaces = (json['places'] as List).map((place) {
+      return PlacesModel(
+        name: place['name'] as String,
+        info: place['info'] as String,
+        address: place['address'] as String,
+        website: place['website'] as String?,
+        images: List<String>.from(place['images'] as List),
+        reviews: List<String>.from(place['reviews'] as List),
+        ratings: place['ratings'] as double,
+        latitude: place['latitude'] as double,
+        longitude: place['longitude'] as double,
+        emails: (place['emails'] as List?)?.map((item) => item as String).toList() ?? [],
+        phoneNumber: (place['phoneNumber'] as List?)?.map((item) => item as String).toList() ?? [],
       );
     }).toList();
 

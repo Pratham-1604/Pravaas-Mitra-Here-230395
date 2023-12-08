@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:here/models/city_model.dart';
-import 'package:here/models/places_thumbnail_modell.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../models/places_model.dart';
 
 final HomePageRepositoryProvider = Provider(
   (ref) => HomePageRepository(),
@@ -38,19 +39,30 @@ class HomePageRepository {
 
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-        debugPrint("Successful CITYNAME API ${jsonResponse['places']}");
-        // Parse the JSON response into CityModel
+        debugPrint("Successful CITYNAME API ${response.body}");
+// Parse the JSON response into CityModel
         CityModel c = CityModel(
           name: jsonResponse['city'],
           countryName: jsonResponse['country'],
           info: jsonResponse['info'],
-          places: List<PlaceThumbnailModel>.from(
+          places: List<PlacesModel>.from(
             (jsonResponse['places'] as List).map(
-              (place) => PlaceThumbnailModel(
-                name: place[0] as String,
-                image: place[4] as String,
-                rating: place[1] as double,
-                isFavourite: false,
+              (place) => PlacesModel(
+                name: place['name'] as String,
+                info: place['info'] as String,
+                address: place['address'] as String,
+                website: place['website'] as String?,
+                images: List<String>.from(place['images'] as List),
+                reviews: List<String>.from(place['reviews'] as List),
+                ratings: place['ratings'] as double,
+                latitude: place['latitude'] as double,
+                longitude: place['longitude'] as double,
+                emails: (place['emails'] as List?)
+                        ?.map((item) => item as String)
+                        .toList() ?? [],
+                phoneNumber: (place['phoneNumber'] as List?)
+                        ?.map((item) => item as String)
+                        .toList() ?? [],
               ),
             ),
           ),

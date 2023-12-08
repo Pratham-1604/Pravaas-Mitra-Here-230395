@@ -1,16 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+
 import 'package:here/features/historical_information/widgets/read_more.dart';
+import 'package:here/models/places_model.dart';
 
 import 'widgets/image_widget.dart';
 
 class HistoricalInformationPage extends StatelessWidget {
-  const HistoricalInformationPage({super.key});
+  const HistoricalInformationPage({
+    Key? key,
+    required this.plc,
+  }) : super(key: key);
+
+  final PlacesModel plc;
 
   @override
   Widget build(BuildContext context) {
-    String eg =
-        'The sun dipped below the horizon, casting a warm orange glow across the tranquil sea. The waves gently lapped against the shore, creating a soothing melody that echoed through the quiet coastal town. Seagulls soared in the sky, their cries mingling with the distant laughter of children playing on the sandy beach. As twilight settled in, the first stars began to twinkle overhead, painting the night sky with a celestial brilliance. A gentle breeze rustled through the palm trees, carrying with it the scent of saltwater and blooming flowers. In the distance, a lighthouse stood tall, its beacon guiding ships safely through the dark waters. The air was filled with a sense of serenity, as if time itself had slowed down to savor the beauty of the moment. Shadows danced along the cobblestone streets as the town gradually embraced the calm of the evening. It was a scene of pure tranquility, where nature and human presence harmonized in a timeless dance.';
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -21,7 +27,7 @@ class HistoricalInformationPage extends StatelessWidget {
                 width: size.width,
                 height: size.height * 0.01,
               ),
-              ImageWidget(size: size),
+              ImageWidget(size: size, img: plc.images[0]),
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -30,12 +36,12 @@ class HistoricalInformationPage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    NameAndMap(),
+                    NameAndMap(name: plc.name),
                     const SizedBox(height: 4),
-                    ReviewsWidget(),
+                    ReviewsWidget(rating: plc.ratings,),
                     const SizedBox(height: 10),
                     ReadMoreTextWidget(
-                      text: eg,
+                      text: plc.info,
                     ),
                   ],
                 ),
@@ -50,8 +56,11 @@ class HistoricalInformationPage extends StatelessWidget {
 
 class ReviewsWidget extends StatelessWidget {
   const ReviewsWidget({
-    super.key,
-  });
+    Key? key,
+    required this.rating,
+  }) : super(key: key);
+
+  final double rating;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +73,7 @@ class ReviewsWidget extends StatelessWidget {
         ),
         const SizedBox(width: 2),
         Text(
-          '4.5',
+          rating.toString(),
           style: TextStyle(
             fontSize: 12,
             color: Colors.grey,
@@ -86,8 +95,11 @@ class ReviewsWidget extends StatelessWidget {
 
 class NameAndMap extends StatelessWidget {
   const NameAndMap({
-    super.key,
-  });
+    Key? key,
+    required this.name,
+  }) : super(key: key);
+
+  final String name;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +107,7 @@ class NameAndMap extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Name',
+          name,
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,

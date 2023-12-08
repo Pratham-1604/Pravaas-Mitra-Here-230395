@@ -1,13 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class ImageWidget extends StatelessWidget {
   const ImageWidget({
-    super.key,
+    Key? key,
     required this.size,
-  });
+    required this.img,
+  }) : super(key: key);
 
   final Size size;
-
+  final String img;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -21,7 +23,11 @@ class ImageWidget extends StatelessWidget {
               height: size.height * 0.38,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: Colors.black,
+                // color: Colors.black,
+              ),
+              child: Image.network(
+                img,
+                fit: BoxFit.cover,
               ),
             ),
           ),
