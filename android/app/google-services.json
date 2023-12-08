@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "895528592522",
+    "project_id": "here-hackathon-iitb",
+    "storage_bucket": "here-hackathon-iitb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:895528592522:android:ddb6f14ab5410695bc7973",
+        "android_client_info": {
+          "package_name": "com.example.here"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7Eh965MOz3nkhYKmkODK5vTaiv-X9MpM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
