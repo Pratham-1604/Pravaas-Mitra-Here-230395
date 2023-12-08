@@ -45,14 +45,14 @@ def city():
 
             body = {
                 "textQuery": f"Historical Monuments In {city}",
-                "maxResultCount": 3,
-                "minRating": 4.5,
+                "maxResultCount": 10,
+                "minRating": 4,
             }
             res = requests.post(url, headers=headers, json=body)
             if res.status_code == 200:
                 places = []
                 data2 = res.json()
-                for i in range(3):
+                for i in range(len(data2["places"])):
                     place = data2["places"][i]
                     name = place["displayName"]["text"]
                     address = place["formattedAddress"]
