@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:here/features/home_page/controller/home_page_repositoy_controller.dart';
@@ -22,7 +24,7 @@ class PopularDestinationItems extends ConsumerWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
-        itemCount: city.places.length,
+        itemCount: min(city.places.length, 3),
         itemBuilder: (context, index) {
           return PopularDestinationItemWidget(
             size: size,

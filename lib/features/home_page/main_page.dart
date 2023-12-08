@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:here/features/city_information/city_information_page.dart';
 import 'package:here/features/home_page/controller/home_page_repositoy_controller.dart';
+import 'package:here/features/home_page/widgets/new_city.dart';
 import '../profile_page/profile_page.dart';
 import 'package:here/models/city_model.dart';
 
@@ -33,9 +34,9 @@ class _HomePageState extends ConsumerState<HomePage> {
     // Use asynchronous operation in initState, like Future.delayed
     // to avoid triggering LateInitializationError
     Future.delayed(Duration.zero, () async {
-      await ref.read(HomePageControllerProvider).setCurrentCity();
+      await ref.watch(HomePageControllerProvider).setCurrentCity();
       setState(() {
-        city = ref.read(HomePageControllerProvider).getCityDetails();
+        city = ref.watch(HomePageControllerProvider).getCityDetails();
       });
     });
   }
@@ -70,6 +71,14 @@ class _HomePageState extends ConsumerState<HomePage> {
             AppBarWidget(
               cityName: city!.name,
               countryName: city!.countryName,
+              onFindCityPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => NewCityInput(),
+                  ),
+                );
+              },
+              // favoriteCities: ["Mumbai", "Hyderabad"],
             ),
             _buildPage(_currentIndex),
             BottomNavBar(

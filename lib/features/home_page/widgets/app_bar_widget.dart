@@ -1,4 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class AppBarWidget extends StatelessWidget {
@@ -6,10 +7,12 @@ class AppBarWidget extends StatelessWidget {
     Key? key,
     required this.cityName,
     required this.countryName,
+    required this.onFindCityPressed,
   }) : super(key: key);
 
   final String cityName;
   final String countryName;
+  final VoidCallback onFindCityPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +39,30 @@ class AppBarWidget extends StatelessWidget {
                     color: Colors.blue,
                   ),
                   SizedBox(width: 2),
-                  Text("$cityName $countryName"),
-                  Icon(
-                    Icons.keyboard_arrow_down_outlined,
-                    color: Colors.blue,
+                  Text('$cityName $countryName'),
+                  PopupMenuButton(
+                    initialValue: 'current', // Set the initial value
+                    itemBuilder: (BuildContext context) {
+                      return [
+                        PopupMenuItem(
+                          child: Text("$cityName $countryName"),
+                          value: 'current',
+                        ),
+                        PopupMenuItem(
+                          child: Text('Find Another City'),
+                          value: 'findCity',
+                        ),
+                      ];
+                    },
+                    onSelected: (value) {
+                      if (value == 'findCity') {
+                        onFindCityPressed();
+                      }
+                    },
+                    child: Icon(
+                      Icons.keyboard_arrow_down_outlined,
+                      color: Colors.blue,
+                    ),
                   ),
                   SizedBox(width: 10),
                 ],

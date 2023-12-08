@@ -20,10 +20,10 @@ class HomePageRepository {
   }
 
   Future<void> setCity() async {
-    Position position = await _determinePosition();
+    Position position = await determinePosition();
     // process and get output
     try {
-      const String url = 'https://6a62-150-242-204-196.ngrok-free.app/city';
+      const String url = 'https://23e2-150-242-204-196.ngrok-free.app/city';
       final Map<String, dynamic> requestBody = {
         "latitude": position.latitude,
         "longitude": position.longitude,
@@ -81,7 +81,7 @@ class HomePageRepository {
     return _city;
   }
 
-  Future<Position> _determinePosition() async {
+  Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
