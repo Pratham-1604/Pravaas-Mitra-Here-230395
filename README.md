@@ -21,10 +21,6 @@ Welcome to Pravaas Mitra! Your ultimate travel assistant for discovering new pla
 1) Route Optimization: Planning optimized routes and real-time guided tour assistance.
 2) Traffic Optimization: Helping users avoid traffic congestion for smoother travel experiences.
 
-## Getting Started
-Clone the repository: git clone https://github.com/your-username/travel-companion-app.git
-Install dependencies and set up API keys as required.
-
 Start exploring and planning your next adventure!
 
 
