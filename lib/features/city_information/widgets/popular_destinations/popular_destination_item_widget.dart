@@ -62,21 +62,21 @@ class PopularDestinationItemWidget extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Row(
-                    children: [
-                      const Icon(
+                    children: const [
+                      Icon(
                         Icons.star,
                         color: Colors.yellow,
                         size: 20,
                       ),
-                      const SizedBox(width: 4),
-                      const Text(
+                      SizedBox(width: 4),
+                      Text(
                         '4.1',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(width: 2),
+                      SizedBox(width: 2),
                     ],
                   ),
                 ),
