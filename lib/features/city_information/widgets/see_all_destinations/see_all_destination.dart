@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import 'package:here/features/city_information/widgets/popular_destinations/popular_destination_item_widget.dart';
-import 'package:here/features/home_page/widgets/recommend/recommend_tour_items_widget.dart';
 
 import './widgets//search_bar.dart';
 import 'widgets/app_bar.dart';
