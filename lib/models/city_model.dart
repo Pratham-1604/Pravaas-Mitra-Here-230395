@@ -1,18 +1,34 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:here/models/places_thumbnail_modell.dart';
+import 'places_thumbnail_modell.dart';
 
 class CityModel {
   final String name;
   final String countryName;
   final String info;
-  final String famousFor;
   final List<PlaceThumbnailModel> places;
 
   CityModel({
     required this.name,
     required this.countryName,
     required this.info,
-    required this.famousFor,
     required this.places,
   });
+
+  factory CityModel.fromJson(Map<String, dynamic> json) {
+    // Convert each inner list into a PlaceThumbnailModel
+    List<PlaceThumbnailModel> convertedPlaces = (json['places'] as List).map((place) {
+      return PlaceThumbnailModel(
+        name: place[0] as String,
+        image: place[1] as String,
+        rating: place[2] as double,
+        isFavourite: place[3] as bool,
+      );
+    }).toList();
+
+    return CityModel(
+      name: json['city'] as String,
+      countryName: json['country'] as String,
+      info: json['info'] as String,
+      places: convertedPlaces,
+    );
+  }
 }
