@@ -18,7 +18,7 @@ class RecommendTourItems extends StatelessWidget {
       "time": "2N 3D",
     },
     {
-      "name": "Luxuirous Pune",
+      "name": "Luxurious Pune",
       "imgUrl":
           "https://t4.ftcdn.net/jpg/02/87/42/67/360_F_287426729_qbmatCI3Tc8XIQ5hjUJriYZOZlVUOnb4.jpg",
       "time": "3N 4D",

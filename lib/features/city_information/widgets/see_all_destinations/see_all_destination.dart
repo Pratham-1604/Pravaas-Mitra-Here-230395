@@ -23,7 +23,7 @@ class SeeAllDestinations extends ConsumerWidget {
           // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
-            AppBarWidget(),
+            AppBarWidget(cityname: city.name,),
             const SizedBox(height: 20),
             SearchBarWidget(),
             Expanded(

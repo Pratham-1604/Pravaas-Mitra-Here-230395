@@ -1,10 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 
 class AppBarWidget extends StatefulWidget {
   const AppBarWidget({
-    super.key,
-  });
+    Key? key,
+    required this.cityname,
+  }) : super(key: key);
+
+  final String cityname;
 
   static const List<String> tags = [
     "Locations",
@@ -83,7 +87,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'Aspen',
+            widget.cityname,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
