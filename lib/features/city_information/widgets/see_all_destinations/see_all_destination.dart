@@ -5,8 +5,8 @@ import 'package:here/features/city_information/widgets/popular_destinations/popu
 
 import '../../../../models/city_model.dart';
 import '../../../home_page/controller/home_page_repositoy_controller.dart';
-import './widgets//search_bar.dart';
-import 'widgets/app_bar.dart';
+import './widgets/search_bar.dart';
+import './widgets/app_bar.dart';
 
 class SeeAllDestinations extends ConsumerWidget {
   const SeeAllDestinations({super.key});
@@ -25,7 +25,7 @@ class SeeAllDestinations extends ConsumerWidget {
             const SizedBox(height: 20),
             AppBarWidget(),
             const SizedBox(height: 20),
-            SearchBar(),
+            SearchBarWidget(),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(

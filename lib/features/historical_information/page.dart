@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+import 'package:here/features/historical_information/widgets/map_page.dart';
 
 import 'package:here/features/historical_information/widgets/read_more.dart';
 import 'package:here/models/places_model.dart';
@@ -38,7 +39,9 @@ class HistoricalInformationPage extends StatelessWidget {
                   children: [
                     NameAndMap(name: plc.name),
                     const SizedBox(height: 4),
-                    ReviewsWidget(rating: plc.ratings,),
+                    ReviewsWidget(
+                      rating: plc.ratings,
+                    ),
                     const SizedBox(height: 10),
                     ReadMoreTextWidget(
                       text: plc.info,
@@ -114,7 +117,13 @@ class NameAndMap extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => MapPage(),
+              ),
+            );
+          },
           child: Text(
             'Show map',
             style: TextStyle(

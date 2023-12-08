@@ -1,7 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
-class SearchBar extends StatelessWidget {
-  const SearchBar({
+class SearchBarWidget extends StatelessWidget {
+  const SearchBarWidget({
     super.key,
   });
 
