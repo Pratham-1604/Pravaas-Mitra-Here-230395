@@ -4,7 +4,7 @@ Install dependencies using 'pip install -r requirements.txt'
 Run ngrok server using 'python app.py'
 Copy the server ngrok URL for usage in the app along with the '/city' route
 
-
+2) App
 first you have to run flutter pub get to get all packages.
 NOTE: Cannot upload here_sdk in plugins folder, thus cannot show map in other computers unless you have here_sdk built-in
 
