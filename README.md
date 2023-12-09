@@ -56,3 +56,5 @@ Refer file how_to_run_app for detailed instructions on how to run the server and
 6) Realtime filters
 
 Start exploring and planning your next adventure!
+
+PS: Ideas- https://www.figma.com/file/4V2yEIHMUcDUvpUXSERsdu/here-ideas?type=whiteboard&node-id=0-1&t=5GV39cCwqmxtVYGR-0
