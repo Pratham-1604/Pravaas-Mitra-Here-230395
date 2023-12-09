@@ -1,0 +1,15 @@
+first you have to run flutter pub get to get all packages.
+NOTE: Cannot upload here_sdk in plugins folder, thus cannot show map in other computers unless you have here_sdk built-in
+
+incase you want to download and install here_sdk, follow this documentation: https://www.here.com/docs/bundle/sdk-for-flutter-explore-developer-guide/page/topics/quick-start.html
+
+else you will have to comment out some code from main dart file, mainly the functions initialize_here_sdk, dspose_here_sdk. Also delete all the imports related to here_Sdk. Delete the file map_page from widgets under historical_information under features in lib folder. also change the onpressed of the showmap button to null in NameAndMap widget.
+
+make sure to allow all location permissions
+
+now in home_page_repository.dart file
+replace the url with the url generated from server using ngrok
+
+and done
+
+now just flutter run and it should work.
