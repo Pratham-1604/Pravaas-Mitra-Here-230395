@@ -10,6 +10,7 @@ Welcome to Pravaas Mitra! Your ultimate travel assistant for discovering new pla
 5) Historical Insights: Uses Google Palm AI to generate historical information about the place and city, enriching users' knowledge.
 6) Visual Experience: Integrates Google Places API to fetch images of specific locations, enhancing visualization.
 7) UI: Simple but elegant UI
+8) Simple auth with email and password.
 
 ## Screenshots
 ### 1. Home Page
@@ -36,6 +37,10 @@ Welcome to Pravaas Mitra! Your ultimate travel assistant for discovering new pla
 
 ### 8. Explore any city in the world using the button
 <img src="https://github.com/Pratham-1604/Here-Hackathon/assets/97680850/ffef8c76-a081-468c-9219-1acb18e6634a" width="30%" height="30%">
+
+### 9. Onboarding and Auth
+<img src="https://github.com/Pratham-1604/Pravaas-Mitra-Here-230395/assets/97680850/64d128c3-164f-4ca4-b215-770bca966d72" width="30%" height="30%">
+<img src="https://github.com/Pratham-1604/Pravaas-Mitra-Here-230395/assets/97680850/54915dda-3343-46d4-b584-02f42a01d69a" width="30%" height="30%">
 
 ## APIs Used
 1) [HERE Maps SDK (Flutter)](https://www.here.com/docs/bundle/sdk-for-flutter-explore-developer-guide/page/README.html)
