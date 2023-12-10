@@ -13,6 +13,8 @@ import 'widgets/bottom_nav_bar.dart';
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  static const routeName = '/homepage';
+
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
 }
