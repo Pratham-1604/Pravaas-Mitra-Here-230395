@@ -10,7 +10,7 @@ Welcome to Pravaas Mitra! Your ultimate travel assistant for discovering new pla
 5) Historical Insights: Uses Google Palm AI to generate historical information about the place and city, enriching users' knowledge.
 6) Visual Experience: Integrates Google Places API to fetch images of specific locations, enhancing visualization.
 7) UI: Simple but elegant UI
-8) Simple auth with email and password.
+8) Simple auth with email and password using Firebase
 
 ## Screenshots
 ### 1. Home Page
