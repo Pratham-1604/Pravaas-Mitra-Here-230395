@@ -1,11 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:here/common_widget/routing_function.dart';
+import 'package:here/features/auth/user_screen.dart';
 import 'package:here/features/home_page/main_page.dart';
 
 import '../../../common_widget/common_snackbar.dart';
@@ -45,18 +44,15 @@ class AuthRepository {
     required BuildContext context,
     required String email,
     required String password,
+    required ProviderRef ref,
   }) async {
     try {
       await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        HomePage.routeName,
-        (route) => false,
-      );
+      popAndPushNamed(routeName: UserInformationScreen.routeName, ctx: context);
+      
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         showsnackbar(
@@ -81,7 +77,6 @@ class AuthRepository {
     required BuildContext context,
     required String name,
     required String phoneNumber,
-    required File? profilePic,
     required ProviderRef ref,
     required String address,
   }) async {

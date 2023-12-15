@@ -5,6 +5,8 @@ import 'package:here/features/auth/auth_screen.dart';
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
+  static const routeName = '/onboarding';
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

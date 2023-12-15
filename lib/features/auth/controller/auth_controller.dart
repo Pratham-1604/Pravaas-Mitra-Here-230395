@@ -42,6 +42,7 @@ class AuthController {
       context: context,
       email: email,
       password: password,
+      ref: ref,
     );
   }
 
@@ -57,7 +58,6 @@ class AuthController {
       name: name,
       phoneNumber: phoneNumber,
       address: address,
-      profilePic: profilePic,
       ref: ref,
     );
   }

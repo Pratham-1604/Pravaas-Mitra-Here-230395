@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:here/common_widget/common_snackbar.dart';
 import 'package:here/models/city_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,14 +21,14 @@ class HomePageRepository {
     _city = cityData;
   }
 
-  Future<void> setCity() async {
-    Position position = await determinePosition();
+  Future<void> setCity(BuildContext context) async {
+    Map<String, double> position = await determinePosition(context);
     // process and get output
     try {
-      const String url = 'https://23e2-150-242-204-196.ngrok-free.app/city';
+      const String url = 'https://29e8-34-91-92-52.ngrok-free.app/city';
       final Map<String, dynamic> requestBody = {
-        "latitude": position.latitude,
-        "longitude": position.longitude,
+        "latitude": position["latitude"],
+        "longitude": position["longitude"],
       };
 
       final response = await http.post(
@@ -81,32 +83,36 @@ class HomePageRepository {
     return _city;
   }
 
-  Future<Position> determinePosition() async {
+  Future<Map<String, double>> determinePosition(BuildContext context) async {
     bool serviceEnabled;
     LocationPermission permission;
-
+    const Map<String, double> predefined = {
+      "latitude": 18.516726 , 
+      "longitude": 73.856255, 
+    };
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
+      return predefined;
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
+        showsnackbar(context: context, msg: 'Pls allow location services!');
+        permission = await Geolocator.requestPermission();
       }
     }
 
-    if (permission == LocationPermission.deniedForever) {
+    if (permission == LocationPermission.deniedForever ||
+        permission == LocationPermission.denied) {
       // Permissions are denied forever, handle appropriately.
-      return Future.error(
-        'Location permissions are permanently denied, we cannot request permissions.',
-      );
+      return predefined;
     }
-
+    Position a = await Geolocator.getCurrentPosition();
+    Map<String, double> defined = {"latitude": a.latitude, "longitude": a.longitude};
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition();
+    return defined;
   }
 }

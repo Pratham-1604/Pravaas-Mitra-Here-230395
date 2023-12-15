@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:here/features/auth/auth_screen.dart';
+import 'package:here/features/auth/controller/auth_controller.dart';
+import 'package:here/features/auth/user_screen.dart';
 import 'package:here/features/onboarding/onboarding_screen.dart';
 
 import '/firebase_options.dart';
 
+import 'common_widget/error.dart';
+import 'common_widget/loader.dart';
 import 'features/home_page/main_page.dart';
 
 import 'package:here_sdk/core.dart';
@@ -45,20 +49,33 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const OnboardingScreen(),
       routes: {
+        OnboardingScreen.routeName:(context) => OnboardingScreen(),
         AuthScreen.routeName: (context) => AuthScreen(),
-        HomePage.routeName:(context) => HomePage(),
+        HomePage.routeName: (context) => HomePage(),
+        UserInformationScreen.routeName:(context) => UserInformationScreen(),
       },
+      home: ref.watch(userDataAuthProvider).when(
+            data: (data) =>
+                data != null ? const HomePage() : const OnboardingScreen(),
+                // const HomePage(),
+            error: (error, stacktrace) {
+              debugPrint(error.toString());
+              return ErrorScreen(
+                error: error.toString(),
+              );
+            },
+            loading: () => const LoaderPage(),
+          ),
     );
   }
 }

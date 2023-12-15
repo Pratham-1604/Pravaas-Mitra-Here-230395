@@ -36,7 +36,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     // Use asynchronous operation in initState, like Future.delayed
     // to avoid triggering LateInitializationError
     Future.delayed(Duration.zero, () async {
-      await ref.watch(HomePageControllerProvider).setCurrentCity();
+      await ref.watch(HomePageControllerProvider).setCurrentCity(context);
       setState(() {
         city = ref.watch(HomePageControllerProvider).getCityDetails();
       });

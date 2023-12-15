@@ -1,8 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:here/features/auth/auth_screen.dart';
+import 'package:here/features/auth/controller/auth_controller.dart';
 
-class OptionsWidget extends StatelessWidget {
+class OptionsWidget extends ConsumerWidget {
   const OptionsWidget({
     super.key,
     required this.size,
@@ -11,7 +14,7 @@ class OptionsWidget extends StatelessWidget {
   final Size size;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -63,7 +66,10 @@ class OptionsWidget extends StatelessWidget {
               OptionsItems(
                 icon: Icons.logout_rounded,
                 s: 'Logout',
-                onTap: () {},
+                onTap: () {
+                  ref.read(authControllerProvider).logout();
+                  Navigator.popAndPushNamed(context, AuthScreen.routeName);
+                },
                 size: size,
                 isTop: false,
                 isBottom: true,
