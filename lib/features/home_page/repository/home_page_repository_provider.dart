@@ -1,7 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
-import 'dart:js';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:here/common_widget/common_snackbar.dart';
@@ -38,42 +40,39 @@ class HomePageRepository {
           'Content-Type': 'application/json',
         },
       );
-
+      Map<String, dynamic> jsonResponse;
       if (response.statusCode == 200) {
-        Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-        debugPrint("Successful CITYNAME API ${response.body}");
-
-        CityModel c = CityModel(
-          name: jsonResponse['city'],
-          countryName: jsonResponse['country'],
-          info: jsonResponse['info'],
-          places: (jsonResponse['places'] as List).map((place) {
-            return PlacesModel(
-              name: place['name'] as String,
-              info: place['info'] as String,
-              address: place['address'] as String,
-              website: place['website'] as String?,
-              images: place['images'] as String,
-              ratings: place['ratings'] as double,
-              latitude: place['latitude'] as double,
-              longitude: place['longitude'] as double,
-              emails: place['emails'] as String?,
-              phoneNumber: place['phoneNumber'] as String?,
-            );
-          }).toList(),
-        );
-
-        cityData = c;
+        jsonResponse = jsonDecode(response.body);
+        // debugPrint("Successful CITYNAME API");
+        showsnackbar(context: context, msg: "Successful CITYNAME API");
       } else {
-        debugPrint('here');
-        CityModel c = CityModel(
-          name: 'DBC',
-          countryName: 'IND',
-          info: "Hello ",
-          places: [],
-        );
-        cityData = c;
+        String jsonString =
+            await rootBundle.loadString('assets/default_data/city_default_data.json');
+        jsonResponse = jsonDecode(jsonString);
+        // debugPrint("loaded default string");
+        showsnackbar(context: context, msg: "loaded default string");
       }
+
+      CityModel c = CityModel(
+        name: jsonResponse['city'],
+        countryName: jsonResponse['country'],
+        info: jsonResponse['info'],
+        places: (jsonResponse['places'] as List).map((place) {
+          return PlacesModel(
+            name: place['name'] as String,
+            info: place['info'] as String,
+            address: place['address'] as String,
+            website: place['website'] as String?,
+            images: place['images'] as String,
+            ratings: place['ratings'] as double,
+            latitude: place['latitude'] as double,
+            longitude: place['longitude'] as double,
+            emails: place['emails'] as String?,
+            phoneNumber: place['phoneNumber'] as String?,
+          );
+        }).toList(),
+      );
+      cityData = c;
     } catch (e) {
       debugPrint("ERROR_CITY_NAME_API , ${e.toString()}");
     }
@@ -87,8 +86,8 @@ class HomePageRepository {
     bool serviceEnabled;
     LocationPermission permission;
     const Map<String, double> predefined = {
-      "latitude": 18.516726 , 
-      "longitude": 73.856255, 
+      "latitude": 18.516726,
+      "longitude": 73.856255,
     };
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -110,7 +109,10 @@ class HomePageRepository {
       return predefined;
     }
     Position a = await Geolocator.getCurrentPosition();
-    Map<String, double> defined = {"latitude": a.latitude, "longitude": a.longitude};
+    Map<String, double> defined = {
+      "latitude": a.latitude,
+      "longitude": a.longitude
+    };
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
     return defined;

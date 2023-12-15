@@ -71,6 +71,7 @@ flutter:
   assets:
     - assets/mountain.jpg
     - assets/auth.jpg
+    - assets/default_data/city_default_data.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
