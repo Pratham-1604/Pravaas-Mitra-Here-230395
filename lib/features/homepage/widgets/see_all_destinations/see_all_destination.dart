@@ -14,7 +14,7 @@ class SeeAllDestinations extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    CityModel? city = ref.watch(HomePageControllerProvider).getCityDetails();
+    CityModel? city = ref.watch(SkeletonControllerProvider).getCityDetails();
 
     final size = MediaQuery.of(context).size;
     if (city == null) return LoaderWidget();

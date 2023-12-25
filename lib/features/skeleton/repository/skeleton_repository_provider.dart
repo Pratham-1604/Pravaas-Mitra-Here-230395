@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
@@ -11,73 +13,54 @@ import 'package:here_sdk/search.dart';
 import '../../../models/city_model.dart';
 import 'package:here/common_widget/common_snackbar.dart';
 
-
 final SkeletonRepositoryProvider = Provider(
-  (ref) => HomePageRepository(),
+  (ref) => SkeletonRepository(),
 );
 
-class HomePageRepository {
+class SkeletonRepository {
   CityModel? _city;
 
+  set cityName(CityModel? a) {
+    if (a != null) {
+      _city = a;
+    } else {
+      debugPrint("a is null");
+      _city = CityModel(name: "ABC", countryName: "EFG", info: "");
+    }
+  }
+
   Future<void> setCity(BuildContext context) async {
-    //   Map<String, double> position = await determinePosition(context);
-    //   debugPrint("set current city repository");
+    try {
+      GeoCoordinates a = await determinePosition(context);
+      String? s = await getAddressForCoordinates(a, context);
+      debugPrint("success");
+      debugPrint(s.toString());
 
-    //   // process and get output
-    //   try {
-    //     const String url = 'https://2cc5-34-125-215-183.ngrok-free.app/city';
-    //     final Map<String, dynamic> requestBody = {
-    //       "latitude": position["latitude"],
-    //       "longitude": position["longitude"],
-    //     };
+      // Split the addressText by commas and trim each word
+      List<String> words = s?.split(',').map((e) => e.trim()).toList() ?? [];
 
-    //     final response = await http.post(
-    //       Uri.parse(url),
-    //       body: jsonEncode(requestBody),
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     );
-    //     Map<String, dynamic> jsonResponse;
-    //     if (response.statusCode == 200) {
-    //       jsonResponse = jsonDecode(response.body);
-    //       debugPrint("Successful CITYNAME API");
-    //       showsnackbar(context: context, msg: "Successful CITYNAME API");
-    //     } else {
-    //       String jsonString = await rootBundle
-    //           .loadString('assets/default_data/city_default_data.json');
-    //       jsonResponse = jsonDecode(jsonString);
-    //       debugPrint("loaded default string");
-    //       showsnackbar(context: context, msg: "loaded default string");
-    //     }
+      // Extract the last two words
+      List<String> lastTwoWords = words.length > 1
+          ? [words[words.length - 2].split(" ").first, words.last]
+          : []; // If there are fewer than two words, an empty list is returned
 
-    //     CityModel c = CityModel(
-    //       name: jsonResponse['city'],
-    //       countryName: jsonResponse['country'],
-    //       info: jsonResponse['info'],
-    //       places: (jsonResponse['places'] as List).map((place) {
-    //         return PlacesModel(
-    //           name: place['name'] as String,
-    //           info: place['info'] as String,
-    //           address: place['address'] as String,
-    //           website: place['website'] as String?,
-    //           images: place['images'] as String,
-    //           ratings: place['ratings'] as num,
-    //           latitude: place['latitude'] as double,
-    //           longitude: place['longitude'] as double,
-    //           emails: place['emails'] as String?,
-    //           phoneNumber: place['phoneNumber'] as String?,
-    //         );
-    //       }).toList(),
-    //     );
-    //     _city = c;
-    //   } catch (e) {
-    //     debugPrint("ERROR_CITY_NAME_API , ${e.toString()}");
-    //   }
+      CityModel newCity = CityModel(
+        name: lastTwoWords[0],
+        countryName: lastTwoWords[1],
+        info: "",
+      );
+
+      cityName = newCity;
+
+      // Output the last two words
+      debugPrint("Last two words: $lastTwoWords");
+    } catch (error) {
+      debugPrint("Error in setCity: $error");
+    }
   }
 
   CityModel? getCurrentCity() {
-    debugPrint("get current city repository");
+    debugPrint("city name: $_city");
     return _city;
   }
 
@@ -112,35 +95,45 @@ class HomePageRepository {
     return geo;
   }
 
-  Future<String> getAddressForCoordinates(
+  Future<String?> getAddressForCoordinates(
     GeoCoordinates geoCoordinates,
     BuildContext context,
   ) async {
+    Completer<String?> completer = Completer<String?>();
+
     try {
       SearchEngine searchEngine = SearchEngine();
       SearchOptions reverseGeocodingOptions = SearchOptions();
       reverseGeocodingOptions.languageCode = LanguageCode.enGb;
       reverseGeocodingOptions.maxItems = 1;
-      String s = "";
-      searchEngine.searchByCoordinates(geoCoordinates, reverseGeocodingOptions,
-          (SearchError? searchError, List<Place>? list) async {
-        if (searchError != null) {
-          showsnackbar(
-            context: context,
-            msg: "Reverse geocoding Error: $searchError",
-          );
-          return;
-        }
-        s = list!.first.address.addressText;
-        // If error is null, list is guaranteed to be not empty.
-        showsnackbar(
-          context: context,
-          msg: "Reverse geocoded address: ${list.first.address.addressText}",
-        );
-      });
-      return s;
+
+      searchEngine.searchByCoordinates(
+        geoCoordinates,
+        reverseGeocodingOptions,
+        (SearchError? searchError, List<Place>? list) async {
+          if (searchError != null) {
+            showsnackbar(
+              context: context,
+              msg: "Reverse geocoding Error: $searchError",
+            );
+            completer.completeError(searchError.toString());
+          } else {
+            if (list != null && list.isNotEmpty) {
+              String addressText = list.first.address.addressText;
+              debugPrint("Address: $addressText");
+
+              completer.complete(addressText);
+            } else {
+              completer.completeError("No address found.");
+            }
+          }
+        },
+      );
+
+      // Wait for the asynchronous operation to complete
+      return completer.future;
     } on InstantiationException {
-      showsnackbar(context: context, msg: 'Instantian exception');
+      showsnackbar(context: context, msg: 'Instantiation exception');
       throw Exception("Initialization of SearchEngine failed.");
     } catch (err) {
       showsnackbar(context: context, msg: err.toString());

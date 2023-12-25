@@ -19,10 +19,10 @@ class Skeleton extends ConsumerStatefulWidget {
   static const routeName = '/homepage';
 
   @override
-  ConsumerState<Skeleton> createState() => _HomePageState();
+  ConsumerState<Skeleton> createState() => _SkeletonState();
 }
 
-class _HomePageState extends ConsumerState<Skeleton> {
+class _SkeletonState extends ConsumerState<Skeleton> {
   int _currentIndex = 0;
 
   List<Widget> pages = const [
@@ -31,18 +31,31 @@ class _HomePageState extends ConsumerState<Skeleton> {
     ProfilePage(),
   ];
 
-  CityModel? city = CityModel(
-    name: dummy_city_data['city'] as String,
-    countryName: dummy_city_data['country'] as String,
-    info: dummy_city_data['info'] as String,
-  );
-  
-  // void setData() async {
-  //   await ref.watch(HomePageControllerProvider).setCurrentCity(context);
-  //   setState(() {
-  //     city = ref.watch(HomePageControllerProvider).getCityDetails();
-  //   });
-  // }
+  CityModel? city;
+  // CityModel(
+  //   name: dummy_city_data['city'] as String,
+  //   countryName: dummy_city_data['country'] as String,
+  //   info: dummy_city_data['info'] as String,
+  // );
+
+  // String? a = "P";
+
+  Future<void> setData() async {
+    await ref.watch(SkeletonControllerProvider).setCurrentCity(context);
+    setState(() {
+      city = ref.watch(SkeletonControllerProvider).getCityDetails();
+      // a = ref.watch(SkeletonControllerProvider).getCityDetails();
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    Future.delayed(Duration.zero, () async {
+      await setData();
+    });
+    super.initState();
+  }
 
   // @override
   // void didChangeDependencies() {
@@ -62,7 +75,12 @@ class _HomePageState extends ConsumerState<Skeleton> {
     if (city == null) {
       return const Scaffold(
         body: Center(
-          child: CircularProgressIndicator(),
+          child: Column(
+            children: [
+              CircularProgressIndicator(),
+              Text('a null'),
+            ],
+          ),
         ),
       );
     }

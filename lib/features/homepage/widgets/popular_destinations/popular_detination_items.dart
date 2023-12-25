@@ -17,7 +17,7 @@ class PopularDestinationItems extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    CityModel? city = ref.watch(HomePageControllerProvider).getCityDetails();
+    CityModel? city = ref.watch(SkeletonControllerProvider).getCityDetails();
     if (city == null) return LoaderWidget();
     return SizedBox(
       height: size.height * 0.38,

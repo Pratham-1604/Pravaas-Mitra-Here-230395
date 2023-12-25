@@ -7,31 +7,31 @@ import 'package:here_sdk/core.dart';
 
 import '../repository/skeleton_repository_provider.dart';
 
-final HomePageControllerProvider = Provider((ref) {
+final SkeletonControllerProvider = Provider((ref) {
   final skeletonRepository = ref.watch(SkeletonRepositoryProvider);
-  return HomePageController(skeletonRepository, ref);
+  return SkeletonController(skeletonRepository, ref);
 });
 
-class HomePageController {
-  final HomePageRepository homePageRepository;
+class SkeletonController {
+  final SkeletonRepository skeletonRepository;
   final ProviderRef ref;
 
-  HomePageController(
-    this.homePageRepository,
+  SkeletonController(
+    this.skeletonRepository,
     this.ref,
   );
 
   CityModel? getCityDetails() {
     debugPrint("get current city contoller");
-    return homePageRepository.getCurrentCity();
+    return skeletonRepository.getCurrentCity();
   }
 
   Future<void> setCurrentCity(BuildContext context) {
     debugPrint("set current city contoller");
-    return homePageRepository.setCity(context);
+    return skeletonRepository.setCity(context);
   }
 
   Future<GeoCoordinates> getCurrentPosition(BuildContext context) {
-    return homePageRepository.determinePosition(context);
+    return skeletonRepository.determinePosition(context);
   }
 }
