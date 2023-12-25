@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:here/dummy_data/data.dart';
+// import 'package:here/dummy_data/data.dart';
 
 import 'package:here/features/homepage/home_page.dart';
 import 'package:here/features/skeleton/controller/skeleton_repositoy_controller.dart';
@@ -75,12 +75,7 @@ class _SkeletonState extends ConsumerState<Skeleton> {
     if (city == null) {
       return const Scaffold(
         body: Center(
-          child: Column(
-            children: [
-              CircularProgressIndicator(),
-              Text('a null'),
-            ],
-          ),
+          child: CircularProgressIndicator(),
         ),
       );
     }

@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:here/models/places_model.dart';
 
 import 'package:here_sdk/core.dart';
 import 'package:here_sdk/core.errors.dart';
@@ -19,6 +20,18 @@ final SkeletonRepositoryProvider = Provider(
 
 class SkeletonRepository {
   CityModel? _city;
+  List<PlacesModel>? _places;
+  GeoCoordinates? _geoCoordinates;
+
+  CityModel? getCurrentCity() {
+    debugPrint("city name: $_city");
+    return _city;
+  }
+
+  GeoCoordinates? getGeocoordinates() {
+    debugPrint("geocoordinates getter: $_geoCoordinates");
+    return _geoCoordinates;
+  }
 
   set cityName(CityModel? a) {
     if (a != null) {
@@ -26,6 +39,19 @@ class SkeletonRepository {
     } else {
       debugPrint("a is null");
       _city = CityModel(name: "ABC", countryName: "EFG", info: "");
+    }
+  }
+
+  set geoCoordinates(GeoCoordinates? geo) {
+    if (geo != null) {
+      _geoCoordinates = geo;
+    } else {
+      debugPrint("geocoordinates setter null");
+      final GeoCoordinates predefined = GeoCoordinates(
+        18.516726,
+        73.856255,
+      );
+      _geoCoordinates = predefined;
     }
   }
 
@@ -39,27 +65,20 @@ class SkeletonRepository {
         info: "",
       );
 
+      // Set the city
       cityName = newCity;
     } catch (error) {
       debugPrint("Error in setCity: $error");
     }
   }
 
-  CityModel? getCurrentCity() {
-    debugPrint("city name: $_city");
-    return _city;
-  }
-
-  Future<GeoCoordinates> determinePosition(BuildContext context) async {
+  Future<void> determinePosition(BuildContext context) async {
     bool serviceEnabled;
     LocationPermission permission;
-    final GeoCoordinates predefined = GeoCoordinates(
-      18.516726,
-      73.856255,
-    );
+
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return predefined;
+      return;
     }
 
     permission = await Geolocator.checkPermission();
@@ -73,12 +92,11 @@ class SkeletonRepository {
     if (permission == LocationPermission.deniedForever ||
         permission == LocationPermission.denied) {
       // Permissions are denied forever, handle appropriately.
-
-      return predefined;
+      return;
     }
     Position a = await Geolocator.getCurrentPosition();
     GeoCoordinates geo = GeoCoordinates(a.latitude, a.longitude);
-    return geo;
+    geoCoordinates = geo;
   }
 
   Future<Map?> getAddressForCoordinates(
@@ -93,8 +111,13 @@ class SkeletonRepository {
       reverseGeocodingOptions.languageCode = LanguageCode.enGb;
       reverseGeocodingOptions.maxItems = 1;
 
+      if (_geoCoordinates == null) {
+        showsnackbar(context: context, msg: 'geocoordinates null');
+        return "";
+      }
+
       searchEngine.searchByCoordinates(
-        geoCoordinates,
+        _geoCoordinates!,
         reverseGeocodingOptions,
         (SearchError? searchError, List<Place>? list) async {
           if (searchError != null) {
