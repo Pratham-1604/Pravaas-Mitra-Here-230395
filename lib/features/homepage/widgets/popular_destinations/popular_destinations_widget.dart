@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:here/features/skeleton/controller/skeleton_repositoy_controller.dart';
 import '../see_all_destinations/see_all_destination.dart';
 
 import 'popular_detination_items.dart';
 
-class PopularDestinationWidget extends StatelessWidget {
+class PopularDestinationWidget extends ConsumerWidget {
   const PopularDestinationWidget({
     super.key,
     required this.size,
@@ -13,7 +15,7 @@ class PopularDestinationWidget extends StatelessWidget {
   final Size size;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         Padding(
@@ -30,11 +32,12 @@ class PopularDestinationWidget extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => SeeAllDestinations(),
-                    ),
-                  );
+                  ref.read(SkeletonControllerProvider).getCategories(context);
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => SeeAllDestinations(),
+                  //   ),
+                  // );
                 },
                 child: Text('See All'),
               ),

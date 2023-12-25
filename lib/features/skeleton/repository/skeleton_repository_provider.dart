@@ -22,6 +22,15 @@ class SkeletonRepository {
   CityModel? _city;
   List<PlacesModel>? _places;
   GeoCoordinates? _geoCoordinates;
+  SearchEngine? _searchEngine;
+
+  SkeletonRepository() {
+    try {
+      _searchEngine = SearchEngine();
+    } on InstantiationException {
+      throw Exception("Initialization of SearchEngine failed.");
+    }
+  }
 
   CityModel? getCurrentCity() {
     debugPrint("city name: $_city");
@@ -57,8 +66,8 @@ class SkeletonRepository {
 
   Future<void> setCity(BuildContext context) async {
     try {
-      GeoCoordinates a = await determinePosition(context);
-      Map? s = await getAddressForCoordinates(a, context);
+      await determinePosition(context);
+      Map? s = await getAddressForCoordinates(context);
       CityModel newCity = CityModel(
         name: s?['city'] ?? "",
         countryName: s?['country'] ?? "",
@@ -72,13 +81,13 @@ class SkeletonRepository {
     }
   }
 
-  Future<GeoCoordinates> determinePosition(BuildContext context) async {
+  Future<void> determinePosition(BuildContext context) async {
     bool serviceEnabled;
     LocationPermission permission;
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      
+      return;
     }
 
     permission = await Geolocator.checkPermission();
@@ -89,68 +98,155 @@ class SkeletonRepository {
         permission = await Geolocator.requestPermission();
       }
     }
-    if (permission == LocationPermission.deniedForever ||
-        permission == LocationPermission.denied) {
+    if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      // return;
+      showsnackbar(context: context, msg: 'Permissions denied forever!');
+
+      // Set default coordinates or handle as needed
+      _geoCoordinates = GeoCoordinates(18.516726, 73.856255);
+      return;
     }
+
+    // Continue with normal flow
     Position a = await Geolocator.getCurrentPosition();
     GeoCoordinates geo = GeoCoordinates(a.latitude, a.longitude);
     geoCoordinates = geo;
-    return geo;
   }
 
   Future<Map?> getAddressForCoordinates(
-    GeoCoordinates geoCoordinates,
     BuildContext context,
   ) async {
     Completer<Map?> completer = Completer<Map?>();
 
-    try {
-      SearchEngine searchEngine = SearchEngine();
-      SearchOptions reverseGeocodingOptions = SearchOptions();
-      reverseGeocodingOptions.languageCode = LanguageCode.enGb;
-      reverseGeocodingOptions.maxItems = 1;
+    SearchOptions reverseGeocodingOptions = SearchOptions();
+    reverseGeocodingOptions.languageCode = LanguageCode.enGb;
+    reverseGeocodingOptions.maxItems = 1;
 
-      if (_geoCoordinates == null) {
-        showsnackbar(context: context, msg: 'geocoordinates null');
-        // return "";
+    if (_geoCoordinates == null) {
+      showsnackbar(context: context, msg: 'geocoordinates null');
+      // return "";
+    }
+
+    _searchEngine!.searchByCoordinates(
+      _geoCoordinates!,
+      reverseGeocodingOptions,
+      (SearchError? searchError, List<Place>? list) async {
+        if (searchError != null) {
+          showsnackbar(
+            context: context,
+            msg: "Reverse geocoding Error: $searchError",
+          );
+          completer.completeError(searchError.toString());
+        } else {
+          if (list != null && list.isNotEmpty) {
+            String city = list.first.address.city;
+            String country = list.first.address.country;
+            final data = {
+              "city": city,
+              "country": country,
+            };
+            completer.complete(data);
+          } else {
+            completer.completeError("No address found.");
+          }
+        }
+      },
+    );
+
+    // Wait for the asynchronous operation to complete
+    return completer.future;
+  }
+
+  void getPlaces({
+    required List<PlaceCategory> categoryList,
+    required BuildContext context,
+    required numberOfItems,
+  }) {
+    var queryArea = CategoryQueryArea.withCenter(_geoCoordinates!);
+    CategoryQuery categoryQuery = CategoryQuery.withCategoriesInArea(
+      categoryList,
+      queryArea,
+    );
+
+    SearchOptions searchOptions = SearchOptions();
+    searchOptions.languageCode = LanguageCode.enUs;
+    searchOptions.maxItems = numberOfItems;
+
+    _searchEngine!.searchByCategory(categoryQuery, searchOptions,
+        (SearchError? searchError, List<Place>? list) async {
+      if (searchError != null) {
+        // Handle error.
+        return;
       }
 
-      searchEngine.searchByCoordinates(
-        _geoCoordinates!,
-        reverseGeocodingOptions,
-        (SearchError? searchError, List<Place>? list) async {
-          if (searchError != null) {
-            showsnackbar(
-              context: context,
-              msg: "Reverse geocoding Error: $searchError",
-            );
-            completer.completeError(searchError.toString());
-          } else {
-            if (list != null && list.isNotEmpty) {
-              String city = list.first.address.city;
-              String country = list.first.address.country;
-              final data = {
-                "city": city,
-                "country": country,
-              };
-              completer.complete(data);
-            } else {
-              completer.completeError("No address found.");
-            }
-          }
-        },
-      );
+      // If error is null, list is guaranteed to be not empty.
+      int listLength = list!.length;
 
-      // Wait for the asynchronous operation to complete
-      return completer.future;
-    } on InstantiationException {
-      showsnackbar(context: context, msg: 'Instantiation exception');
-      throw Exception("Initialization of SearchEngine failed.");
-    } catch (err) {
-      showsnackbar(context: context, msg: err.toString());
-      throw Exception("Error while searching: $err");
+      // showsnackbar(context: context, msg: '$listLength');
+
+      // Add new marker for each search result on map.
+      for (Place searchResult in list) {
+        debugPrint(
+            "${searchResult.title}, ${searchResult.details.ratings.length}");
+        // debugPrint("${searchResult.details.}");
+      }
+      return;
+    });
+  }
+
+  String categoryToString(String cat) {
+    switch (cat) {
+      case 'Locations':
+        return PlaceCategory.sightsLandmarkAttaction;
+      case 'Hotels':
+        return PlaceCategory.goingOutEntertainment;
+      case 'Food':
+        return PlaceCategory.eatAndDrinkRestaurant;
+      case 'Adventure':
+        return PlaceCategory.naturalAndGeographical;
+      case 'Parks':
+        return PlaceCategory.facilitiesVenueSports;
+      default:
+        return 'all';
+    }
+  }
+
+  void specificCategory({
+    required String category,
+    required BuildContext context,
+  }) {
+    String currCat = categoryToString(category);
+    if (currCat == 'all') {
+      popularCategories(context: context);
+      return;
+    }
+
+    getPlaces(
+        categoryList: [PlaceCategory(currCat)],
+        context: context,
+        numberOfItems: 5);
+  }
+
+  void popularCategories({required BuildContext context}) {
+    List<PlaceCategory> categoryList = [];
+    // categoryList.add(PlaceCategory(PlaceCategory.eatAndDrink));
+    categoryList.add(PlaceCategory(PlaceCategory.sightsLandmarkAttaction));
+    categoryList.add(PlaceCategory(PlaceCategory.goingOutEntertainment));
+    categoryList.add(PlaceCategory(PlaceCategory.eatAndDrinkRestaurant));
+    categoryList.add(PlaceCategory(PlaceCategory.naturalAndGeographical));
+    categoryList.add(PlaceCategory(PlaceCategory.facilitiesVenueSports));
+
+    if (_geoCoordinates == null) {
+      showsnackbar(context: context, msg: "geocoordinates null");
+      return;
+    }
+
+    for (var category in categoryList) {
+      getPlaces(
+        categoryList: [category],
+        context: context,
+        numberOfItems: 5,
+      );
     }
   }
 }

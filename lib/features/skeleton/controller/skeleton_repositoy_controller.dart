@@ -22,16 +22,18 @@ class SkeletonController {
   );
 
   CityModel? getCityDetails() {
-    debugPrint("get current city contoller");
     return skeletonRepository.getCurrentCity();
   }
 
   Future<void> setCurrentCity(BuildContext context) {
-    debugPrint("set current city contoller");
     return skeletonRepository.setCity(context);
   }
 
   GeoCoordinates? getCurrentGeocoordinates(BuildContext context) {
     return skeletonRepository.getGeocoordinates();
+  }
+
+  void getCategories(BuildContext context) {
+    skeletonRepository.popularCategories(context: context);
   }
 }
