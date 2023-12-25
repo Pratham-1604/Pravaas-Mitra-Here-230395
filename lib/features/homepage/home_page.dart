@@ -7,9 +7,9 @@ import 'widgets/filters/filter_widget.dart';
 import 'widgets/popular_destinations/popular_destinations_widget.dart';
 import 'widgets/recommend/recommend_tour_widget.dart';
 
-class CityInformationMainPage extends ConsumerWidget {
-  const CityInformationMainPage({super.key});
-
+class HomePage extends ConsumerWidget {
+  const HomePage({super.key});
+  
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;

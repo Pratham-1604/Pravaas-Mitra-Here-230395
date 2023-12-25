@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:here/common_widget/routing_function.dart';
 import 'package:here/features/auth/user_screen.dart';
-import 'package:here/features/home_page/main_page.dart';
+import 'package:here/features/skeleton/skeleton.dart';
 
 import '../../../common_widget/common_snackbar.dart';
 import '../../../models/user_model.dart';
+import '../../skeleton/test_home_page.dart';
 
 final authRepositoryProvider = Provider((ref) {
   return AuthRepository(
@@ -94,7 +95,7 @@ class AuthRepository {
           .set(user.toMap());
       Navigator.pushNamedAndRemoveUntil(
         context,
-        HomePage.routeName,
+        Skeleton.routeName,
         (route) => false,
       );
     } catch (e) {
@@ -111,7 +112,7 @@ class AuthRepository {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       Navigator.pushNamedAndRemoveUntil(
         context,
-        HomePage.routeName,
+        Skeleton.routeName,
         (route) => false,
       );
       return;

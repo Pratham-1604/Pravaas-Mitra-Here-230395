@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors
 import 'package:flutter/material.dart';
 
-import 'package:here/features/historical_information/page.dart';
+import 'package:here/features/historical_information/detailed_historical_information_page.dart';
 import 'package:here/models/places_model.dart';
 
 class PopularDestinationItemWidget extends StatelessWidget {
@@ -20,7 +20,7 @@ class PopularDestinationItemWidget extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => HistoricalInformationPage(plc: plc),
+            builder: (context) => DetailedHistoricalInformationPage(plc: plc),
           ),
         );
       },

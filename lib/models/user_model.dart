@@ -1,12 +1,10 @@
-import 'package:here/models/places_model.dart';
-
 class UserModel {
   final String userId;
   final String name;
   final String email;
   final String phone;
   final String userAddress;
-  final List<PlacesModel>? favourites;
+  // final List<PlacesModel>? favourites;
 
   UserModel({
     required this.userId,
@@ -14,7 +12,7 @@ class UserModel {
     required this.email,
     required this.phone,
     required this.userAddress,
-    this.favourites,
+    // this.favourites,
   });
 
   Map<String, dynamic> toMap() {
@@ -24,7 +22,7 @@ class UserModel {
       'email': email,
       'phone': phone,
       'userAddress': userAddress,
-      'favourites': favourites!=null ? favourites!.map((x) => x.toMap()).toList() : [],
+      // 'favourites': favourites!=null ? favourites!.map((x) => x.toMap()).toList() : [],
     };
   }
 
@@ -35,7 +33,7 @@ class UserModel {
       email: map['email'] as String,
       phone: map['phone'] as String,
       userAddress: map['userAddress'] as String,
-      favourites: map['favourites'] != null ? List<PlacesModel>.from((map['favourites'] as List<int>).map<PlacesModel?>((x) => PlacesModel.fromMap(x as Map<String,dynamic>),),) : null,
+      // favourites: map['favourites'] != null ? List<PlacesModel>.from((map['favourites'] as List<int>).map<PlacesModel?>((x) => PlacesModel.fromMap(x as Map<String,dynamic>),),) : null,
     );
   }
 }

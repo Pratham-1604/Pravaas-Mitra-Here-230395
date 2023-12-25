@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:here/features/city_information/widgets/popular_destinations/popular_destination_item_widget.dart';
+import 'package:here/common_widget/loader.dart';
+import 'package:here/features/homepage/widgets/popular_destinations/popular_destination_item_widget.dart';
 
 import '../../../../models/city_model.dart';
-import '../../../home_page/controller/home_page_repositoy_controller.dart';
+import '../../../skeleton/controller/skeleton_repositoy_controller.dart';
 import './widgets/search_bar.dart';
 import './widgets/app_bar.dart';
 
@@ -13,9 +14,10 @@ class SeeAllDestinations extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    CityModel city = ref.read(HomePageControllerProvider).getCityDetails();
+    CityModel? city = ref.watch(HomePageControllerProvider).getCityDetails();
 
     final size = MediaQuery.of(context).size;
+    if (city == null) return LoaderWidget();
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.grey[200],
@@ -23,7 +25,9 @@ class SeeAllDestinations extends ConsumerWidget {
           // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
-            AppBarWidget(cityname: city.name,),
+            AppBarWidget(
+              cityname: city!.name,
+            ),
             const SizedBox(height: 20),
             SearchBarWidget(),
             Expanded(
@@ -37,16 +41,16 @@ class SeeAllDestinations extends ConsumerWidget {
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemBuilder: (context, index) => Center(
-                      child: PopularDestinationItemWidget(
-                        size: size,
-                        plc: city.places[index],
+                      // child: PopularDestinationItemWidget(
+                        // size: size,
+                        // plc: city.places[index],
                       ),
                     ),
-                    itemCount: city.places.length,
+                    // itemCount: city.places.length,
                   ),
                 ),
               ),
-            ),
+            // ),
           ],
         ),
       ),

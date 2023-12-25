@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:here/features/home_page/repository/home_page_repository_provider.dart';
+import 'package:here/features/skeleton/repository/home_page_repository_provider.dart';
 import 'package:here/models/city_model.dart';
+import 'package:here_sdk/core.dart';
 
 final HomePageControllerProvider = Provider((ref) {
   final chatRepository = ref.watch(HomePageRepositoryProvider);
@@ -19,15 +20,17 @@ class HomePageController {
     this.ref,
   );
 
-  CityModel getCityDetails() {
+  CityModel? getCityDetails() {
+    debugPrint("get current city contoller");
     return homePageRepository.getCurrentCity();
   }
 
   Future<void> setCurrentCity(BuildContext context) {
+    debugPrint("set current city contoller");
     return homePageRepository.setCity(context);
   }
 
-  Future<Map<String, double>> getCurrentPosition(BuildContext context) {
+  Future<GeoCoordinates> getCurrentPosition(BuildContext context) {
     return homePageRepository.determinePosition(context);
   }
 }

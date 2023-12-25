@@ -5,7 +5,7 @@ class PlacesModel {
   final String? website;
   final String images;
   // final List<String> reviews;
-  final double ratings;
+  final num ratings;
   final double latitude;
   final double longitude;
   final String? emails;

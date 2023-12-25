@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -50,7 +48,6 @@ class AuthController {
     required BuildContext context,
     required String name,
     required String phoneNumber,
-    required File? profilePic,
     required String address,
   }) {
     return authRepository.saveUserDataToFirebase(

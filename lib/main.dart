@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:here/features/auth/auth_screen.dart';
-import 'package:here/features/auth/controller/auth_controller.dart';
-import 'package:here/features/auth/user_screen.dart';
-import 'package:here/features/onboarding/onboarding_screen.dart';
+import 'package:here/features/skeleton/test_home_page.dart';
+
+import 'features/auth/auth_screen.dart';
+import 'features/auth/controller/auth_controller.dart';
+import 'features/auth/user_screen.dart';
+import 'features/onboarding/onboarding_screen.dart';
 
 import '/firebase_options.dart';
 
 import 'common_widget/error.dart';
 import 'common_widget/loader.dart';
-import 'features/home_page/main_page.dart';
+import 'features/skeleton/skeleton.dart';
 
 import 'package:here_sdk/core.dart';
 import 'package:here_sdk/core.engine.dart';
@@ -59,23 +61,32 @@ class MyApp extends ConsumerWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        OnboardingScreen.routeName:(context) => OnboardingScreen(),
+        OnboardingScreen.routeName: (context) => OnboardingScreen(),
         AuthScreen.routeName: (context) => AuthScreen(),
-        HomePage.routeName: (context) => HomePage(),
-        UserInformationScreen.routeName:(context) => UserInformationScreen(),
+        Skeleton.routeName: (context) => Skeleton(),
+        TestHomePage.routeName: (context) => TestHomePage(),
+        UserInformationScreen.routeName: (context) => UserInformationScreen(),
       },
-      home: ref.watch(userDataAuthProvider).when(
-            data: (data) =>
-                data != null ? const HomePage() : const OnboardingScreen(),
-                // const HomePage(),
-            error: (error, stacktrace) {
-              debugPrint(error.toString());
-              return ErrorScreen(
-                error: error.toString(),
-              );
-            },
-            loading: () => const LoaderPage(),
-          ),
+      // home: ref.watch(userDataAuthProvider).when(
+      //       data: (data) {
+      //         debugPrint("hello");
+      //         debugPrint(data.toString());
+      //         return data != null
+      //             ? const Skeleton()
+      //             : const OnboardingScreen();
+      //         // return const TestHomePage();
+      //       },
+      //       error: (error, stacktrace) {
+      //         debugPrint(stacktrace.toString());
+      //         debugPrint(error.toString());
+      //         return ErrorScreen(
+      //           error: error.toString(),
+      //         );
+      //       },
+      //       loading: () => const LoaderPage(),
+      //     ),
+      home: const TestHomePage(),
+      // home: const HomePage(),
     );
   }
 }

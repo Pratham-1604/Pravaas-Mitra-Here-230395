@@ -1,17 +1,21 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:here/dummy_data/data.dart';
 
-import 'package:here/features/city_information/city_information_page.dart';
-import 'package:here/features/home_page/controller/home_page_repositoy_controller.dart';
-import 'package:here/features/home_page/widgets/new_city.dart';
+import 'package:here/features/homepage/home_page.dart';
+import 'package:here/features/skeleton/controller/skeleton_repositoy_controller.dart';
+import 'package:here/features/skeleton/widgets/new_city.dart';
+import '../../models/places_model.dart';
 import '../profile_page/profile_page.dart';
 import 'package:here/models/city_model.dart';
 
 import 'widgets/app_bar_widget.dart';
 import 'widgets/bottom_nav_bar.dart';
 
-class HomePage extends ConsumerStatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class Skeleton extends ConsumerStatefulWidget {
+  const Skeleton({Key? key}) : super(key: key);
 
   static const routeName = '/homepage';
 
@@ -23,24 +27,28 @@ class _HomePageState extends ConsumerState<HomePage> {
   int _currentIndex = 0;
 
   List<Widget> pages = const [
-    CityInformationMainPage(),
-    CityInformationMainPage(),
+    HomePage(),
+    HomePage(),
     ProfilePage(),
   ];
 
-  CityModel? city;
+  CityModel? city = CityModel(
+    name: dummy_city_data['city'] as String,
+    countryName: dummy_city_data['country'] as String,
+    info: dummy_city_data['info'] as String,
+  );
+  
+  void setData() async {
+    await ref.watch(HomePageControllerProvider).setCurrentCity(context);
+    setState(() {
+      city = ref.watch(HomePageControllerProvider).getCityDetails();
+    });
+  }
 
   @override
-  void initState() {
-    super.initState();
-    // Use asynchronous operation in initState, like Future.delayed
-    // to avoid triggering LateInitializationError
-    Future.delayed(Duration.zero, () async {
-      await ref.watch(HomePageControllerProvider).setCurrentCity(context);
-      setState(() {
-        city = ref.watch(HomePageControllerProvider).getCityDetails();
-      });
-    });
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // setData();
   }
 
   Widget _buildPage(int index) {

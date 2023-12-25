@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../city_information/widgets/see_all_destinations/widgets/search_bar.dart';
+import '../homepage/widgets/see_all_destinations/widgets/search_bar.dart';
 
 import 'widgets/close_page.dart';
 import 'widgets/icon_widget.dart';

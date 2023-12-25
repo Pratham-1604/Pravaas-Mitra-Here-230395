@@ -10,8 +10,8 @@ import 'widgets/image_widget.dart';
 import 'widgets/name_and_map.dart';
 import 'widgets/reviews_widget.dart';
 
-class HistoricalInformationPage extends ConsumerWidget {
-  const HistoricalInformationPage({
+class DetailedHistoricalInformationPage extends ConsumerWidget {
+  const DetailedHistoricalInformationPage({
     Key? key,
     required this.plc,
   }) : super(key: key);

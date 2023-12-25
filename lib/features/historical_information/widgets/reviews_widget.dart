@@ -8,7 +8,7 @@ class ReviewsWidget extends StatelessWidget {
     required this.rating,
   }) : super(key: key);
 
-  final double rating;
+  final num rating;
 
   @override
   Widget build(BuildContext context) {
