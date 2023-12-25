@@ -1,5 +1,6 @@
 class CityModel {
-  final String name;
+  // late final String name;
+  String name;
   final String countryName;
   final String info;
 

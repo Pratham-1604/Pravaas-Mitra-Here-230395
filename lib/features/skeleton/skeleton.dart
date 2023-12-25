@@ -6,7 +6,9 @@ import 'package:here/dummy_data/data.dart';
 
 import 'package:here/features/homepage/home_page.dart';
 import 'package:here/features/skeleton/controller/skeleton_repositoy_controller.dart';
+import 'package:here/features/skeleton/user_loc.dart';
 import 'package:here/features/skeleton/widgets/new_city.dart';
+import 'package:here_sdk/core.dart';
 import '../profile_page/profile_page.dart';
 import 'package:here/models/city_model.dart';
 
@@ -32,11 +34,11 @@ class _HomePageState extends ConsumerState<Skeleton> {
   ];
 
   CityModel? city = CityModel(
-    name: dummy_city_data['city'] as String,
+    name: "",
     countryName: dummy_city_data['country'] as String,
     info: dummy_city_data['info'] as String,
   );
-  
+
   // void setData() async {
   //   await ref.watch(HomePageControllerProvider).setCurrentCity(context);
   //   setState(() {
@@ -49,6 +51,18 @@ class _HomePageState extends ConsumerState<Skeleton> {
   //   super.didChangeDependencies();
   //   // setData();
   // }
+  late UserLocUtils userLocUtils;
+  @override
+  void initState() {
+    super.initState();
+    // setData();
+    userLocUtils = UserLocUtils();
+    userLocUtils.getCityName().then((value) {
+      setState(() {
+        city?.name = value;
+      });
+    });
+  }
 
   Widget _buildPage(int index) {
     return pages[index];
