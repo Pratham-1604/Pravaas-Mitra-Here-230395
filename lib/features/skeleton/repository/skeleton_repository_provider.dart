@@ -72,13 +72,13 @@ class SkeletonRepository {
     }
   }
 
-  Future<void> determinePosition(BuildContext context) async {
+  Future<GeoCoordinates> determinePosition(BuildContext context) async {
     bool serviceEnabled;
     LocationPermission permission;
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return;
+      
     }
 
     permission = await Geolocator.checkPermission();
@@ -92,11 +92,12 @@ class SkeletonRepository {
     if (permission == LocationPermission.deniedForever ||
         permission == LocationPermission.denied) {
       // Permissions are denied forever, handle appropriately.
-      return;
+      // return;
     }
     Position a = await Geolocator.getCurrentPosition();
     GeoCoordinates geo = GeoCoordinates(a.latitude, a.longitude);
     geoCoordinates = geo;
+    return geo;
   }
 
   Future<Map?> getAddressForCoordinates(
@@ -113,7 +114,7 @@ class SkeletonRepository {
 
       if (_geoCoordinates == null) {
         showsnackbar(context: context, msg: 'geocoordinates null');
-        return "";
+        // return "";
       }
 
       searchEngine.searchByCoordinates(
