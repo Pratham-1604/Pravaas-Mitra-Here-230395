@@ -31,7 +31,7 @@ class SkeletonController {
     return skeletonRepository.setCity(context);
   }
 
-  Future<GeoCoordinates> getCurrentPosition(BuildContext context) {
-    return skeletonRepository.determinePosition(context);
+  GeoCoordinates? getCurrentGeocoordinates(BuildContext context) {
+    return skeletonRepository.getGeocoordinates();
   }
 }
