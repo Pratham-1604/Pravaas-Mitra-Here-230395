@@ -32,28 +32,14 @@ class SkeletonRepository {
   Future<void> setCity(BuildContext context) async {
     try {
       GeoCoordinates a = await determinePosition(context);
-      String? s = await getAddressForCoordinates(a, context);
-      debugPrint("success");
-      debugPrint(s.toString());
-
-      // Split the addressText by commas and trim each word
-      List<String> words = s?.split(',').map((e) => e.trim()).toList() ?? [];
-
-      // Extract the last two words
-      List<String> lastTwoWords = words.length > 1
-          ? [words[words.length - 2].split(" ").first, words.last]
-          : []; // If there are fewer than two words, an empty list is returned
-
+      Map? s = await getAddressForCoordinates(a, context);
       CityModel newCity = CityModel(
-        name: lastTwoWords[0],
-        countryName: lastTwoWords[1],
+        name: s?['city'] ?? "",
+        countryName: s?['country'] ?? "",
         info: "",
       );
 
       cityName = newCity;
-
-      // Output the last two words
-      debugPrint("Last two words: $lastTwoWords");
     } catch (error) {
       debugPrint("Error in setCity: $error");
     }
@@ -95,11 +81,11 @@ class SkeletonRepository {
     return geo;
   }
 
-  Future<String?> getAddressForCoordinates(
+  Future<Map?> getAddressForCoordinates(
     GeoCoordinates geoCoordinates,
     BuildContext context,
   ) async {
-    Completer<String?> completer = Completer<String?>();
+    Completer<Map?> completer = Completer<Map?>();
 
     try {
       SearchEngine searchEngine = SearchEngine();
@@ -119,10 +105,13 @@ class SkeletonRepository {
             completer.completeError(searchError.toString());
           } else {
             if (list != null && list.isNotEmpty) {
-              String addressText = list.first.address.addressText;
-              debugPrint("Address: $addressText");
-
-              completer.complete(addressText);
+              String city = list.first.address.city;
+              String country = list.first.address.country;
+              final data = {
+                "city": city,
+                "country": country,
+              };
+              completer.complete(data);
             } else {
               completer.completeError("No address found.");
             }
@@ -137,7 +126,7 @@ class SkeletonRepository {
       throw Exception("Initialization of SearchEngine failed.");
     } catch (err) {
       showsnackbar(context: context, msg: err.toString());
-      return "Pune";
+      throw Exception("Error while searching: $err");
     }
   }
 }

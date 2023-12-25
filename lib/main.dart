@@ -71,9 +71,10 @@ class MyApp extends ConsumerWidget {
             data: (data) {
               debugPrint("hello");
               debugPrint(data.toString());
-              return data != null
-                  ? const Skeleton()
-                  : const OnboardingScreen();
+              // return data != null
+              //     ? const Skeleton()
+              //     : const OnboardingScreen();
+              return const Skeleton();
               // return const TestHomePage();
             },
             error: (error, stacktrace) {
