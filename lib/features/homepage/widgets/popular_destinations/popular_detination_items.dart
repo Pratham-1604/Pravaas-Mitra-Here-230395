@@ -1,6 +1,4 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:here/features/skeleton/controller/skeleton_repositoy_controller.dart';
@@ -26,11 +24,12 @@ class PopularDestinationItems extends ConsumerWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
-        itemCount: min(city!.places.length, 3),
+        // itemCount: min(3),
+        itemCount: 3,
         itemBuilder: (context, index) {
           return PopularDestinationItemWidget(
             size: size,
-            plc: city.places[index],
+            // plc: city.places[index],
           );
         },
       ),

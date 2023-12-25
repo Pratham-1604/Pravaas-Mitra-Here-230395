@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors
+// ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 
 import 'package:here/features/historical_information/detailed_historical_information_page.dart';
@@ -8,21 +8,21 @@ class PopularDestinationItemWidget extends StatelessWidget {
   const PopularDestinationItemWidget({
     Key? key,
     required this.size,
-    required this.plc,
+    // required this.plc,
   }) : super(key: key);
 
   final Size size;
-  final PlacesModel plc;
+  // final PlacesModel plc;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => DetailedHistoricalInformationPage(plc: plc),
-          ),
-        );
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (context) => DetailedHistoricalInformationPage(),
+        //   ),
+        // );
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -35,10 +35,10 @@ class PopularDestinationItemWidget extends StatelessWidget {
                 // color: Colors.grey,
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Image.network(
-                plc.images,
-                fit: BoxFit.cover,
-              ),
+              // child: Image.network(
+              //   // plc.images,
+              //   fit: BoxFit.cover,
+              // ),
             ),
             Positioned(
               bottom: size.height * 0.35 * 0.2,
@@ -51,7 +51,7 @@ class PopularDestinationItemWidget extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(4.0),
                   child: Text(
-                    plc.name,
+                    "Hi",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -79,7 +79,8 @@ class PopularDestinationItemWidget extends StatelessWidget {
                       ),
                       SizedBox(width: 4),
                       Text(
-                        plc.ratings.toString(),
+                        "4.5",
+                        // plc.ratings.toString(),
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

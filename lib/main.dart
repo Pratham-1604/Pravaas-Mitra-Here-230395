@@ -67,25 +67,25 @@ class MyApp extends ConsumerWidget {
         TestHomePage.routeName: (context) => TestHomePage(),
         UserInformationScreen.routeName: (context) => UserInformationScreen(),
       },
-      // home: ref.watch(userDataAuthProvider).when(
-      //       data: (data) {
-      //         debugPrint("hello");
-      //         debugPrint(data.toString());
-      //         return data != null
-      //             ? const Skeleton()
-      //             : const OnboardingScreen();
-      //         // return const TestHomePage();
-      //       },
-      //       error: (error, stacktrace) {
-      //         debugPrint(stacktrace.toString());
-      //         debugPrint(error.toString());
-      //         return ErrorScreen(
-      //           error: error.toString(),
-      //         );
-      //       },
-      //       loading: () => const LoaderPage(),
-      //     ),
-      home: const TestHomePage(),
+      home: ref.watch(userDataAuthProvider).when(
+            data: (data) {
+              debugPrint("hello");
+              debugPrint(data.toString());
+              return data != null
+                  ? const Skeleton()
+                  : const OnboardingScreen();
+              // return const TestHomePage();
+            },
+            error: (error, stacktrace) {
+              debugPrint(stacktrace.toString());
+              debugPrint(error.toString());
+              return ErrorScreen(
+                error: error.toString(),
+              );
+            },
+            loading: () => const LoaderPage(),
+          ),
+      // home: const TestHomePage(),
       // home: const HomePage(),
     );
   }

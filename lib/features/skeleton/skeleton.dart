@@ -7,7 +7,6 @@ import 'package:here/dummy_data/data.dart';
 import 'package:here/features/homepage/home_page.dart';
 import 'package:here/features/skeleton/controller/skeleton_repositoy_controller.dart';
 import 'package:here/features/skeleton/widgets/new_city.dart';
-import '../../models/places_model.dart';
 import '../profile_page/profile_page.dart';
 import 'package:here/models/city_model.dart';
 
@@ -20,10 +19,10 @@ class Skeleton extends ConsumerStatefulWidget {
   static const routeName = '/homepage';
 
   @override
-  ConsumerState<HomePage> createState() => _HomePageState();
+  ConsumerState<Skeleton> createState() => _HomePageState();
 }
 
-class _HomePageState extends ConsumerState<HomePage> {
+class _HomePageState extends ConsumerState<Skeleton> {
   int _currentIndex = 0;
 
   List<Widget> pages = const [
@@ -38,18 +37,18 @@ class _HomePageState extends ConsumerState<HomePage> {
     info: dummy_city_data['info'] as String,
   );
   
-  void setData() async {
-    await ref.watch(HomePageControllerProvider).setCurrentCity(context);
-    setState(() {
-      city = ref.watch(HomePageControllerProvider).getCityDetails();
-    });
-  }
+  // void setData() async {
+  //   await ref.watch(HomePageControllerProvider).setCurrentCity(context);
+  //   setState(() {
+  //     city = ref.watch(HomePageControllerProvider).getCityDetails();
+  //   });
+  // }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // setData();
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   // setData();
+  // }
 
   Widget _buildPage(int index) {
     return pages[index];

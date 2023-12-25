@@ -2,13 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:here/features/skeleton/repository/home_page_repository_provider.dart';
 import 'package:here/models/city_model.dart';
 import 'package:here_sdk/core.dart';
 
+import '../repository/skeleton_repository_provider.dart';
+
 final HomePageControllerProvider = Provider((ref) {
-  final chatRepository = ref.watch(HomePageRepositoryProvider);
-  return HomePageController(chatRepository, ref);
+  final skeletonRepository = ref.watch(SkeletonRepositoryProvider);
+  return HomePageController(skeletonRepository, ref);
 });
 
 class HomePageController {

@@ -12,7 +12,7 @@ import '../../../models/city_model.dart';
 import 'package:here/common_widget/common_snackbar.dart';
 
 
-final HomePageRepositoryProvider = Provider(
+final SkeletonRepositoryProvider = Provider(
   (ref) => HomePageRepository(),
 );
 
