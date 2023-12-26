@@ -7,7 +7,7 @@ import 'features/auth/auth_screen.dart';
 import 'features/auth/controller/auth_controller.dart';
 import 'features/auth/user_screen.dart';
 import 'features/onboarding/onboarding_screen.dart';
-
+ 
 import '/firebase_options.dart';
 
 import 'common_widget/error.dart';
